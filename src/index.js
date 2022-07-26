@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const http = require("http");
 const bodyParser = require("body-parser");
@@ -8,7 +9,6 @@ const session = require("express-session");
 const app = express();
 const server = http.createServer(app);
 const logger = require("pino")();
-require("dotenv").config();
 
 const {
     MONGODB_URI, PORT, SESSION_SECRET,
@@ -38,8 +38,7 @@ mongoose.connect(
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        useCreateIndex: true,
-        useFindAndModify: false,
+        autoIndex: true,
     },
 );
 const db = mongoose.connection;

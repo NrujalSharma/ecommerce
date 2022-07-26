@@ -1,4 +1,7 @@
 const mongoose = require("mongoose");
+const constants = require("../constants/index");
+
+const allowedUserTypes = Object.keys(constants.USER_TYPES);
 
 const { Schema } = mongoose;
 const { ObjectId } = mongoose;
@@ -6,7 +9,6 @@ const { ObjectId } = mongoose;
 const schema = new Schema({
     name: {
         type: String,
-        index: true,
         required: true,
     },
     email: {
@@ -17,6 +19,7 @@ const schema = new Schema({
     },
     mobileNo: {
         type: String,
+        required: true,
     },
     registrationId: {
         type: ObjectId,
@@ -25,6 +28,7 @@ const schema = new Schema({
     userType: {
         type: String,
         required: true,
+        enum: allowedUserTypes,
     },
 }, {
     collection: "users",
