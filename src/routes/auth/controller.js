@@ -15,7 +15,7 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
     try {
-        const loginData = req.body;
+        const loginData = await validations.login(req.body);
         const { status, message } = await authService.login(loginData);
 
         return res.status(status).send(message);

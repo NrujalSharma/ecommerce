@@ -1,18 +1,8 @@
 const Joi = require("joi");
-const constants = require("../../constants/index");
-
-const { USER_TYPES } = constants;
+const { USER_TYPES } = require("../../constants/index");
+const { validator } = require("../../utils/index");
 
 const allowedUserTypes = Object.keys(USER_TYPES);
-
-const validator = (schema) => async (payload) => {
-    try {
-        return schema.validateAsync(payload, { abortEarly: false });
-    } catch (error) {
-        const formattedMessage = error.details.map((err) => err.message);
-        throw new Error(formattedMessage);
-    }
-};
 
 const register = (payload) => {
     const schema = Joi.object({
@@ -25,6 +15,15 @@ const register = (payload) => {
     return validator(schema)(payload);
 };
 
+const login = (payload) => {
+    const schema = Joi.object({
+        email: Joi.string().email({ tlds: { allow: false } }).required(),
+        password: Joi.string().required(),
+    });
+    return validator(schema)(payload);
+};
+
 module.exports = {
     register,
+    login,
 };

@@ -4,9 +4,9 @@ const { get } = require("lodash");
 const jwt = require("jsonwebtoken");
 
 const LoginRegistration = require("../models/loginRegistration");
-const UserService = require("./users");
+const UsersService = require("./users");
 
-const allUsersServices = new UserService();
+const allUsersServices = new UsersService();
 
 const {
     JWT_SECRET, CRYPTO_SECRET, CRYPTO_ALGORITHM,
@@ -61,7 +61,7 @@ class AuthService {
                 const token = this.createJwt(email);
                 return { status: 201, message: token };
             }
-            return { status: 401, message: "Username or Password incorrect. Please check!" };
+            return { status: 401, message: "Invalid login credentials. Please check!" };
         } catch (err) {
             throw new Error(err || "login error");
         }
